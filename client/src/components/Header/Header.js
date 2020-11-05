@@ -12,7 +12,8 @@ const Header = () => {
 
             {/* Page Links */}
             <div className="topnav-right">
-                <Link className="topnav-link" to='/Register'>Sign in</Link>
+                <Link className="topnav-link" to='/signup'>Sign Up</Link>
+                <Link className="topnav-link" to='/login'>Log In</Link>
                 <Link className="topnav-link" to='/projects'>Projects</Link>
                 <a className="topnav-link" target='_blank' rel="noopener noreferrer" href="https://www.facebook.com/groups/ufosc/events/?source=4&action_history=null&filter=calendar">
                     Events

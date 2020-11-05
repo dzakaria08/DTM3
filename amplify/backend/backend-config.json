@@ -1,0 +1,9 @@
+{
+	"auth": {
+		"dtm3a1791421": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": []
+		}
+	}
+}
