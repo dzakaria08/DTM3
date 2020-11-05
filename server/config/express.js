@@ -10,12 +10,15 @@ module.exports.init = () => {
         connect to database
         - reference README for db uri
     */
+
+    // CHANGE TO DYNAMODB CONNECTION
     mongoose.connect(process.env.DB_URI || require('./config').db.uri, {
         useNewUrlParser: true
     });
     mongoose.set('useCreateIndex', true);
     mongoose.set('useFindAndModify', false);
 
+    
     // initialize app
     const app = express();
 
