@@ -8,6 +8,19 @@ import NotFound from "./views/NotFound"
 import Header from "./components/Header/Header"
 import Amplify, { Auth } from 'aws-amplify';
 import awsconfig from './aws-exports';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import {
+  Link,
+  BrowserRouter as Router,
+  useHistory,
+} from "react-router-dom";
+import Button from '@material-ui/core/Button';
+
+import Sidebar from './components/Sidebar'
+import Home2 from './components/Home'
+import AuthWrapper from './AuthWrapper'
+import { Authenticator } from 'aws-amplify-react';
 
 const AmazonCognitoIdentity = require('amazon-cognito-identity-js');
 const CognitoUserPool = AmazonCognitoIdentity.CognitoUserPool;
@@ -31,10 +44,10 @@ Amplify.configure({
     // identityPoolRegion: 'XX-XXXX-X',
 
     // OPTIONAL - Amazon Cognito User Pool ID
-    userPoolId: 'us-east-2_v4D4DkIII',
+    userPoolId: 'us-east-2_3LuoYnYn0',
 
     // OPTIONAL - Amazon Cognito Web Client ID (26-char alphanumeric string)
-    userPoolWebClientId: '6e4qtivu75p7o3id9kl09c0osp',
+    userPoolWebClientId: '7qlmsskb2g9r3uajkf8dvrpra9',
 
     // OPTIONAL - Manually set key value pairs that can be passed to Cognito Lambda Triggers
     // clientMetadata: { myCustomKey: 'myCustomValue' },
@@ -53,29 +66,50 @@ Amplify.configure({
 const currentConfig = Auth.configure();
 
 const poolData = {    
-  UserPoolId : "us-east-2_v4D4DkIII", // Your user pool id here    
-  ClientId : "6e4qtivu75p7o3id9kl09c0osp" // Your client id here
+  UserPoolId : "us-east-2_3LuoYnYn0", // Your user pool id here    
+  ClientId : "7qlmsskb2g9r3uajkf8dvrpra9" // Your client id here
   }; 
   const pool_region = 'us-east-2';
   
 const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
 
+async function signOut() {
+  try {
+      await Auth.signOut({global: true});
+  } catch (error) {
+      console.log('error signing out: ', error);
+  }
+}
+
 const App = () => {
   return (
-    <div>
-      <AmplifySignOut>My App</AmplifySignOut>
-      <Header />
-      <Switch>
-        <Route exact path="/home" component={Home} />
-        <Route exact path="/">
-          <Redirect to="/home" />
-        </Route>
-        <Route exact path="/signup" component={Signup} />
-        <Route exact path="/login" component={Login} />
-        <Route component={NotFound}/>
-      </Switch>
+    // <div>
+    //   <AmplifySignOut>My App</AmplifySignOut>
+    //   <div>
+    //     <Button onClick={signOut} variant="outlined">
+    //     Log Out
+    //     </Button>        
+    //   </div>
+    //   <Header />
+    //   <Switch>
+    //     <Route exact path="/home" component={Home} />
+    //     <Route exact path="/">
+    //       <Redirect to="/home" />
+    //     </Route>
+    //     {/* <Route exact path="/signup" component={Signup} />
+    //     <Route exact path="/login" component={Login} /> */}
+    //     <Route expact path="/Project" component={Sidebar} />
+    //     <Route component={NotFound}/>
+    //   </Switch>
+    // </div>
+    <div className="App">
+      <header className="App-header">
+        <Authenticator hideDefault={true} amplifyConfig={awsconfig}>
+          <AuthWrapper />
+        </Authenticator>
+      </header>
     </div>
   );
 }
 
-export default withAuthenticator(App);
+export default App;

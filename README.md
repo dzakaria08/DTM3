@@ -17,7 +17,7 @@ This app can be deployed directly to heroku since there is a script defined in p
 #### `client` - Holds the client application
 - #### `public` - This holds all of our static files
 - #### `src`
-    - #### `assets` - This folder holds assets such as images, docs, and fonts
+    - #### `assets` - This folder holds assets such as images, docs, and font'
     - #### `components` - This folder holds all of the different components that will make up our views
     - #### `views` - These represent a unique page on the website i.e. Home or About. These are still normal react components.
     - #### `App.js` - This is what renders all of our browser routes and different views
