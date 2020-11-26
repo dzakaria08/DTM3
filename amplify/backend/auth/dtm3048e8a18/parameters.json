@@ -1,8 +1,8 @@
 {
-    "identityPoolName": "dtm3a1791421_identitypool_a1791421",
+    "identityPoolName": "dtm3048e8a18_identitypool_048e8a18",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "dtm3a1791421",
-    "userPoolName": "dtm3a1791421_userpool_a1791421",
+    "resourceNameTruncated": "dtm3048e8a18",
+    "userPoolName": "dtm3048e8a18_userpool_048e8a18",
     "autoVerifiedAttributes": [
         "email"
     ],
@@ -18,8 +18,7 @@
     "passwordPolicyMinLength": 8,
     "passwordPolicyCharacters": [],
     "requiredAttributes": [
-        "email",
-        "name"
+        "email"
     ],
     "userpoolClientGenerateSecret": true,
     "userpoolClientRefreshTokenValidity": 30,
@@ -29,10 +28,10 @@
     "userpoolClientReadAttributes": [
         "email"
     ],
-    "userpoolClientLambdaRole": "dtm3a1a1791421_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "dtm304048e8a18_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "a1791421",
-    "resourceName": "dtm3a1791421",
+    "sharedId": "048e8a18",
+    "resourceName": "dtm3048e8a18",
     "authSelections": "identityPoolAndUserPool",
     "authRoleArn": {
         "Fn::GetAtt": [
@@ -47,11 +46,9 @@
         ]
     },
     "useDefault": "default",
-    "usernameAttributes": [
-        "email"
-    ],
     "triggers": "{}",
     "userPoolGroupList": [],
+    "serviceName": "Cognito",
     "parentStack": {
         "Ref": "AWS::StackId"
     },

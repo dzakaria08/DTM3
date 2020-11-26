@@ -1,13 +1,17 @@
 import React from 'react';
 import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
+//if withAuthenticator doesnt work try:
+//import {withAuthenticator} from 'aws-amplify-react';
+
 import { Route, Switch, Redirect  } from 'react-router-dom';
 import Home from "./views/Home/Home"
-import Signup from "./views/Signup/Signup"
-import Login from "./views/Login/Login"
 import NotFound from "./views/NotFound"
 import Header from "./components/Header/Header"
-import Amplify, { Auth } from 'aws-amplify';
+import AWSAppSyncClient, { AUTH_TYPE } from 'aws-appsync';
+import Amplify, { Auth, API, graphqlOperation}  from 'aws-amplify';
 import awsconfig from './aws-exports';
+
+Amplify.configure(awsconfig);
 
 const AmazonCognitoIdentity = require('amazon-cognito-identity-js');
 const CognitoUserPool = AmazonCognitoIdentity.CognitoUserPool;
@@ -17,11 +21,17 @@ const jwkToPem = require('jwk-to-pem');
 const jwt = require('jsonwebtoken');
 global.fetch = require('node-fetch');
 
+// const client = new AWSAppSyncClient({
+//   url: awsconfig.aws_appsync_graphqlEndpoint,
+//   region: awsconfig.aws_appsync_region,
+//   auth: {
+//     type: AUTH_TYPE.AMAZON_COGNITO_USER_POOLS,
+//     jwtToken: async () => (await Auth.currentSession()).getIdToken().getJwtToken(),
+//   },
+// });
+
 Amplify.configure({
   Auth: {
-
-    // REQUIRED only for Federated Authentication - Amazon Cognito Identity Pool ID
-    // identityPoolId: 'XX-XXXX-X:XXXXXXXX-XXXX-1234-abcd-1234567890ab',
 
     // REQUIRED - Amazon Cognito Region
     region: 'us-east-2',
@@ -31,10 +41,10 @@ Amplify.configure({
     // identityPoolRegion: 'XX-XXXX-X',
 
     // OPTIONAL - Amazon Cognito User Pool ID
-    userPoolId: 'us-east-2_v4D4DkIII',
+    userPoolId: 'us-east-2_3LuoYnYn0',
 
     // OPTIONAL - Amazon Cognito Web Client ID (26-char alphanumeric string)
-    userPoolWebClientId: '6e4qtivu75p7o3id9kl09c0osp',
+    userPoolWebClientId: '7qlmsskb2g9r3uajkf8dvrpra9',
 
     // OPTIONAL - Manually set key value pairs that can be passed to Cognito Lambda Triggers
     // clientMetadata: { myCustomKey: 'myCustomValue' },
@@ -53,8 +63,8 @@ Amplify.configure({
 const currentConfig = Auth.configure();
 
 const poolData = {    
-  UserPoolId : "us-east-2_v4D4DkIII", // Your user pool id here    
-  ClientId : "6e4qtivu75p7o3id9kl09c0osp" // Your client id here
+  UserPoolId : "us-east-2_3LuoYnYn0", // Your user pool id here    
+  ClientId : "7qlmsskb2g9r3uajkf8dvrpra9" // Your client id here
   }; 
   const pool_region = 'us-east-2';
   
@@ -70,8 +80,8 @@ const App = () => {
         <Route exact path="/">
           <Redirect to="/home" />
         </Route>
-        <Route exact path="/signup" component={Signup} />
-        <Route exact path="/login" component={Login} />
+        {/* <Route exact path="/signup" component={Signup} />
+        <Route exact path="/login" component={Login} /> */}
         <Route component={NotFound}/>
       </Switch>
     </div>

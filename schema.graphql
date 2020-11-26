@@ -1,0 +1,119 @@
+﻿schema {
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
+}
+
+type Mutation {
+  createProjects(input: CreateProjectsInput!): Projects
+  deleteProjects(input: DeleteProjectsInput!): Projects
+  updateProjects(input: UpdateProjectsInput!): Projects
+}
+
+type Projects @model{
+  guests: [AWSEmail]
+  iFrameURL: AWSURL
+  ownerId: String!
+  projectId: String!
+  projectTitle: String
+}
+
+type ProjectsConnection {
+  items: [Projects]
+  nextToken: String
+}
+
+type Query {
+  getProjects(ownerId: String!, projectId: String!): Projects
+  listProjects(filter: TableProjectsFilterInput, limit: Int, nextToken: String): ProjectsConnection
+}
+
+type Subscription {
+  onCreateProjects(guests: [AWSEmail], iFrameURL: AWSURL, ownerId: String, projectId: String, projectTitle: String): Projects @aws_subscribe(mutations : ["createProjects"])
+  onDeleteProjects(guests: [AWSEmail], iFrameURL: AWSURL, ownerId: String, projectId: String, projectTitle: String): Projects @aws_subscribe(mutations : ["deleteProjects"])
+  onUpdateProjects(guests: [AWSEmail], iFrameURL: AWSURL, ownerId: String, projectId: String, projectTitle: String): Projects @aws_subscribe(mutations : ["updateProjects"])
+}
+
+input CreateProjectsInput {
+  guests: [AWSEmail]
+  iFrameURL: AWSURL
+  ownerId: String!
+  projectId: String!
+  projectTitle: String
+}
+
+input DeleteProjectsInput {
+  ownerId: String!
+  projectId: String!
+}
+
+input TableBooleanFilterInput {
+  eq: Boolean
+  ne: Boolean
+}
+
+input TableFloatFilterInput {
+  between: [Float]
+  contains: Float
+  eq: Float
+  ge: Float
+  gt: Float
+  le: Float
+  lt: Float
+  ne: Float
+  notContains: Float
+}
+
+input TableIDFilterInput {
+  beginsWith: ID
+  between: [ID]
+  contains: ID
+  eq: ID
+  ge: ID
+  gt: ID
+  le: ID
+  lt: ID
+  ne: ID
+  notContains: ID
+}
+
+input TableIntFilterInput {
+  between: [Int]
+  contains: Int
+  eq: Int
+  ge: Int
+  gt: Int
+  le: Int
+  lt: Int
+  ne: Int
+  notContains: Int
+}
+
+input TableProjectsFilterInput {
+  guests: TableStringFilterInput
+  iFrameURL: TableStringFilterInput
+  ownerId: TableStringFilterInput
+  projectId: TableStringFilterInput
+  projectTitle: TableStringFilterInput
+}
+
+input TableStringFilterInput {
+  beginsWith: String
+  between: [String]
+  contains: String
+  eq: String
+  ge: String
+  gt: String
+  le: String
+  lt: String
+  ne: String
+  notContains: String
+}
+
+input UpdateProjectsInput {
+  guests: [AWSEmail]
+  iFrameURL: AWSURL
+  ownerId: String!
+  projectId: String!
+  projectTitle: String
+}
