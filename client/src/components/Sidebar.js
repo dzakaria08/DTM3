@@ -1,5 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
+import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
+import Amplify, { Auth } from 'aws-amplify';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
@@ -41,6 +43,9 @@ import ServiceReq from './ServiceReq/ServiceReq'
 const drawerWidth = 240;
 
 //styles for html
+
+
+
 const useStyles = makeStyles((theme) => ({
   root: {
     position: "fixed",
@@ -121,11 +126,20 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 //sidebar
-export default function Sidebar() {
+function Sidebar() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   
+  async function signOut() { 
+    try {
+        await Auth.signOut({global: true});
+        this.props.onStateChange("signedOut", {});
+    } catch (error) {
+        console.log('error signing out: ', error);
+    }
+  }
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -167,8 +181,9 @@ export default function Sidebar() {
                 aria-label="account button"
                 edge="start"
                 className={classes.accountButton}
+                onClick = {signOut}
               >
-                <Link to={'/Account'}>
+                <Link to={'/'}>
                 <PersonIcon />
                 </Link>
               </IconButton>
@@ -229,3 +244,5 @@ export default function Sidebar() {
     </div>
   );
 }
+
+export default withAuthenticator(Sidebar)

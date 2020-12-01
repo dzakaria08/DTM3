@@ -16,7 +16,7 @@ export default function Home() {
         <div>
             <Typography variant="h1">Welcome to the log-in page</Typography>
             <Link to="/Project">
-                <Typography variant="paragraph">Projects</Typography>   
+                <Typography variant="paragraph">Log-In</Typography>   
             </Link>
         </div>
     );

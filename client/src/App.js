@@ -4,7 +4,9 @@ import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
 //import {withAuthenticator} from 'aws-amplify-react';
 
 import { Route, Switch, Redirect  } from 'react-router-dom';
-import Home from "./views/Home/Home"
+import Signup from "./views/Signup/Signup"
+import Login from "./views/Login/Login"
+// import Home from "./views/Home/Home"
 import NotFound from "./views/NotFound"
 import Header from "./components/Header/Header"
 import AWSAppSyncClient, { AUTH_TYPE } from 'aws-appsync';
@@ -20,7 +22,7 @@ import {
 import Button from '@material-ui/core/Button';
 
 import Sidebar from './components/Sidebar'
-import Home2 from './components/Home'
+import Home from './components/Home'
 import AuthWrapper from './AuthWrapper'
 import { Authenticator } from 'aws-amplify-react';
 
@@ -114,12 +116,22 @@ const App = () => {
     // </div>
     <div className="App">
       <header className="App-header">
-        <Authenticator hideDefault={true} amplifyConfig={awsconfig}>
+        {/* <Authenticator hideDefault={true} amplifyConfig={awsconfig}>
           <AuthWrapper />
-        </Authenticator>
+        </Authenticator> */}
       </header>
+      <Switch>
+         <Route exact path="/home" component={Home} />
+         <Route exact path="/">
+           <Redirect to="/home" />
+         </Route>
+         <Route exact path="/signup" component={Signup} />
+         <Route exact path="/login" component={Login} />
+         <Route expact path="/Project" component={Sidebar} />
+         <Route component={NotFound}/>
+       </Switch>
     </div>
   );
 }
-
+// export default App;
 export default withAuthenticator(App);
