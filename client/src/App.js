@@ -10,6 +10,19 @@ import Header from "./components/Header/Header"
 import AWSAppSyncClient, { AUTH_TYPE } from 'aws-appsync';
 import Amplify, { Auth, API, graphqlOperation}  from 'aws-amplify';
 import awsconfig from './aws-exports';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import {
+  Link,
+  BrowserRouter as Router,
+  useHistory,
+} from "react-router-dom";
+import Button from '@material-ui/core/Button';
+
+import Sidebar from './components/Sidebar'
+import Home2 from './components/Home'
+import AuthWrapper from './AuthWrapper'
+import { Authenticator } from 'aws-amplify-react';
 
 Amplify.configure(awsconfig);
 
@@ -70,20 +83,41 @@ const poolData = {
   
 const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
 
+async function signOut() {
+  try {
+      await Auth.signOut({global: true});
+  } catch (error) {
+      console.log('error signing out: ', error);
+  }
+}
+
 const App = () => {
   return (
-    <div>
-      <AmplifySignOut>My App</AmplifySignOut>
-      <Header />
-      <Switch>
-        <Route exact path="/home" component={Home} />
-        <Route exact path="/">
-          <Redirect to="/home" />
-        </Route>
-        {/* <Route exact path="/signup" component={Signup} />
-        <Route exact path="/login" component={Login} /> */}
-        <Route component={NotFound}/>
-      </Switch>
+  // <div>
+    //   <AmplifySignOut>My App</AmplifySignOut>
+    //   <div>
+    //     <Button onClick={signOut} variant="outlined">
+    //     Log Out
+    //     </Button>        
+    //   </div>
+    //   <Header />
+    //   <Switch>
+    //     <Route exact path="/home" component={Home} />
+    //     <Route exact path="/">
+    //       <Redirect to="/home" />
+    //     </Route>
+    //     {/* <Route exact path="/signup" component={Signup} />
+    //     <Route exact path="/login" component={Login} /> */}
+    //     <Route expact path="/Project" component={Sidebar} />
+    //     <Route component={NotFound}/>
+    //   </Switch>
+    // </div>
+    <div className="App">
+      <header className="App-header">
+        <Authenticator hideDefault={true} amplifyConfig={awsconfig}>
+          <AuthWrapper />
+        </Authenticator>
+      </header>
     </div>
   );
 }
