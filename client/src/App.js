@@ -73,51 +73,21 @@ const poolData = {
   
 const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
 
-async function signOut() {
-  try {
-      await Auth.signOut({global: true});
-  } catch (error) {
-      console.log('error signing out: ', error);
-  }
-}
-
 const App = () => {
   return (
-    // <div>
-    //   <AmplifySignOut>My App</AmplifySignOut>
-    //   <div>
-    //     <Button onClick={signOut} variant="outlined">
-    //     Log Out
-    //     </Button>        
-    //   </div>
-    //   <Header />
-    //   <Switch>
-    //     <Route exact path="/home" component={Home} />
-    //     <Route exact path="/">
-    //       <Redirect to="/home" />
-    //     </Route>
-    //     {/* <Route exact path="/signup" component={Signup} />
-    //     <Route exact path="/login" component={Login} /> */}
-    //     <Route expact path="/Project" component={Sidebar} />
-    //     <Route component={NotFound}/>
-    //   </Switch>
-    // </div>
     <div className="App">
-      <header className="App-header">
-        {/* <Authenticator hideDefault={true} amplifyConfig={awsconfig}>
-          <AuthWrapper />
-        </Authenticator> */}
-      </header>
-      <Switch>
-         <Route exact path="/home" component={Home} />
-         <Route exact path="/">
-           <Redirect to="/home" />
-         </Route>
-         <Route exact path="/signup" component={Signup} />
-         <Route exact path="/login" component={Login} />
-         <Route expact path="/Project" component={Sidebar} />
-         <Route component={NotFound}/>
-       </Switch>
+      <Router>
+        <header className="App-header">
+        </header>
+        <Switch>
+          <Route exact path="/home" component={Home} />
+          <Route exact path="/">
+            <Redirect to="/home" />
+          </Route>
+          <Route expact path="/Hub" component={Sidebar} />
+          <Route component={NotFound}/>
+        </Switch>
+      </Router>
     </div>
   );
 }

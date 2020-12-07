@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import clsx from 'clsx';
 import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
 import Amplify, { Auth } from 'aws-amplify';
@@ -43,8 +43,6 @@ import ServiceReq from './ServiceReq/ServiceReq'
 const drawerWidth = 240;
 
 //styles for html
-
-
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -126,19 +124,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 //sidebar
-function Sidebar() {
+function Sidebar() {  
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  
+
   async function signOut() { 
-    try {
-        await Auth.signOut({global: true});
-        this.props.onStateChange("signedOut", {});
-    } catch (error) {
-        console.log('error signing out: ', error);
+      try {
+          await Auth.signOut({global: true});
+          this.props.onStateChange("signedOut", {});
+      } catch (error) {
+          console.log('error signing out: ', error);
+      }
     }
-  }
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -151,8 +149,7 @@ function Sidebar() {
     <div className={classes.root}>
       <div className={classes.page}>
         <CssBaseline />
-        <Router>
-          <Redirect to="/Projects"/>
+          <Redirect to="/Hub/Projects"/>
           <AppBar
             color=''
             position="fixed"
@@ -183,7 +180,7 @@ function Sidebar() {
                 className={classes.accountButton}
                 onClick = {signOut}
               >
-                <Link to={'/'}>
+                <Link to={'/home'}>
                 <PersonIcon />
                 </Link>
               </IconButton>
@@ -210,7 +207,7 @@ function Sidebar() {
             <Divider />
             <List>
               {['Projects', 'ServiceRequest', 'Contact', 'Info'].map((text, index) => (
-                <Link to={`/${text}`} className={classes.listText}>
+                <Link to={`/Hub/${text}`} className={classes.listText}>
                   <ListItem button key={text}>
                     <ListItemIcon>{index === 0 ? <FolderIcon /> : index === 1 ? <PeopleIcon /> : index === 2 ? <QuestionAnswerIcon /> : <InfoIcon />}</ListItemIcon>
                     <ListItemText primary={text}/>
@@ -221,25 +218,14 @@ function Sidebar() {
           </Drawer>
           <main className={classes.content}>
             <div className={classes.toolbar} />
-              <Switch>
-                <Route exact path={`/Projects`}>
-                    <Projects/>
-                </Route>
-                <Route exact path={`/ServiceRequest`}>
-                    <ServiceReq />
-                </Route>
-                <Route exact path={`/Contact`}>
-                    <Contact/>
-                </Route>
-                <Route exact path={`/Info`}>
-                    <Info/>
-                </Route>
-                <Route exact path={`/Account`}>
-                    <Account/>
-                </Route>
-              </Switch>
+                <Switch>
+                  <Route path={`/Hub/Projects`} component={Projects} />
+                  <Route exact path={`/Hub/ServiceRequest`} component={ServiceReq} />
+                  <Route exact path={`/Hub/Contact`} component={Contact} />
+                  <Route exact path={`/Hub/Info`} component={Info} />
+                  <Route exact path={`/Hub/Account`} component={Account} />
+                </Switch>
           </main>
-        </Router>
       </div>
     </div>
   );

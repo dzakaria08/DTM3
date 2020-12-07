@@ -42,26 +42,26 @@ export default function Projects() {
 
     return(
         <div>
-            <Router>
-                <div className={classes.head}>
-                    <Typography variant="h3">Projects</Typography>
-                </div>
-                <div className={classes.listContainer}>
-                    <List style={{maxHeight: '100%', overflow: 'auto',}}>
-                        {['Project0', 'Project1', 'Project2', 'Project3', 'Project4', 'Project5', 'Project6'].map((text) => (
-                            <Link to={`/Projects/${text}`} className={classes.listText}>
-                                <ListItem button key={text}>
-                                    <ListItemText primary={text}/>
-                                </ListItem>
-                            </Link>
-                        ))}
-                    </List>
-                </div>
-                <Switch>
-                    <Route exact path={`/Projects/Project0`} exact component={OpenProj} />
-                    <Route exact path={`/Projects/Project1`} exact component={OpenProj1} />
-                </Switch>
-            </Router>
+            <div className={classes.head}>
+                <Typography variant="h3">Projects</Typography>
+            </div>
+            <div className={classes.listContainer}>
+                <List style={{maxHeight: '100%', overflow: 'auto',}}>
+                    {['Project0', 'Project1', 'Project2', 'Project3', 'Project4', 'Project5', 'Project6'].map((text) => (
+                        <Link to={`/Hub/Projects/${text}`} className={classes.listText}>
+                            <ListItem button key={text}>
+                                <ListItemText primary={text}/>
+                            </ListItem>
+                        </Link>
+                    ))}
+                </List>
+            </div>
+            <div>
+               <Switch>
+                    <Route path={`/Hub/Projects/Project0`} component={OpenProj} />
+                    {/* <Route exact path={`/Hub/Projects/Project1`} exact component={OpenProj1} /> */}
+                </Switch> 
+            </div>
         </div>
     )
 }

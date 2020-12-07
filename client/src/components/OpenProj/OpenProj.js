@@ -1,4 +1,5 @@
 import React from 'react';
+import axios, { post } from 'axios';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText'
@@ -19,6 +20,7 @@ import {
     useHistory,
     Redirect
   } from "react-router-dom";
+//import { post } from 'request';
   
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -28,18 +30,37 @@ const useStyles = makeStyles((theme) => ({
         marginTop: "20px",
         width: "100%",
     },
+    input: {
+        display: 'none',
+    },
 })) 
 
-export default function OpenProj() {
-const classes = useStyles()
-const [open, setOpen] = React.useState(false);
 
-const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
+export default function OpenProj() {
+    const classes = useStyles()
+    const [open, setOpen] = React.useState(false);
+
+    const fileHandler = (e) => {
+        let files = e.target.files
+
+        let reader = new FileReader();
+        reader.readAsDataURL(files[0]);
+
+        reader.onload = (e) => {
+            const url = "http://127.0.0.1:5000/upload"
+            const formData = {file: e.target.result}
+            return post(url, formData)
+            .then(response=>console.warn("result", response))
+        }
+    }
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+    const handleClose = () => {
+        setOpen(false);
+    };
+    
     return(
         <div className={classes.root}>
             <div style={{marginTop: "20px"}}>
@@ -58,6 +79,21 @@ const handleClickOpen = () => {
             </div>
             <div style={{marginTop: "20px"}}>
                 <Typography variant="h4">Files</Typography>
+                <div>
+                    <input
+                        accept="image/*"
+                        className={classes.input}
+                        id="contained-button-file"
+                        multiple
+                        onChange={(e)=>fileHandler(e)}
+                        type="file"
+                    />
+                    <label htmlFor="contained-button-file">
+                        <Button variant="contained" color="primary" component="span">
+                        Upload
+                        </Button>
+                    </label>
+                </div>
             </div>
             <div style={{backgroundColor: "white", height: "300px", marginBottom: "20px"}}>
                 <List style={{maxHeight: '100%', overflow: 'auto',}}>
@@ -99,7 +135,6 @@ const handleClickOpen = () => {
                     </DialogActions>
                 </Dialog>
                 </div>
-                
             </div>
             <div style={{backgroundColor: "white", height: "300px", marginBottom: "20px"}}>
                 <List style={{maxHeight: '100%', overflow: 'auto',}}>

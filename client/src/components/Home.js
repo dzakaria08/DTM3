@@ -15,7 +15,7 @@ export default function Home() {
     return (
         <div>
             <Typography variant="h1">Welcome to the log-in page</Typography>
-            <Link to="/Project">
+            <Link to="/Hub">
                 <Typography variant="paragraph">Log-In</Typography>   
             </Link>
         </div>
