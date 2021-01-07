@@ -11,6 +11,8 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import Amplify, { API, graphqlOperation } from "aws-amplify";
+import * as mutations from '../../graphql/mutations';
 import {
     Link,
     Switch,
@@ -34,6 +36,22 @@ export default function OpenProj() {
 const classes = useStyles()
 const [open, setOpen] = React.useState(false);
 
+const newGuest = {
+    projectId: "5c952eac-3944-43f0-99c4-adb50c79ee80",
+    ownerId: "owner444",
+    guest: "guest@gmail.com"
+};
+
+var state = { guests: [] }
+async function addGuest() {
+    try{
+        const newGuestAdded = await API.graphql(graphqlOperation(mutations.addGuestToProject, {input: newGuest}));
+        const guests = newGuestAdded.data.mutations.guests
+        this.setState({guests})
+    } catch(err){
+        console.log('ADD GUEST error: ', err)
+    }
+}
 const handleClickOpen = () => {
     setOpen(true);
   };
@@ -93,7 +111,7 @@ const handleClickOpen = () => {
                     <Button onClick={handleClose} color="primary">
                         Cancel
                     </Button>
-                    <Button onClick={handleClose} color="primary">
+                    <Button onClick={handleClose, addGuest()} color="primary">
                         Add
                     </Button>
                     </DialogActions>

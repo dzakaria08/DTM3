@@ -1,3 +1,9 @@
+input AddGuestInput {
+	projectId: ID!
+	ownerId: ID!
+	guest: AWSEmail!
+}
+
 input CreateProjectInput {
 	projectId: ID!
 	ownerId: String!
@@ -106,6 +112,7 @@ type Mutation {
 	createProject(input: CreateProjectInput!): Project
 	updateProject(input: UpdateProjectInput!): Project
 	deleteProject(input: DeleteProjectInput!): Project
+	addGuestToProject(input: AddGuestInput!): Project
 }
 
 type Project {
